@@ -34,7 +34,7 @@ const app = express();
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
   crossOriginEmbedderPolicy: false,
-  contentSecurityPolicy: {
+  contentSecurityPolicy: config.nodeEnv === 'production' ? false : {
     directives: {
       defaultSrc: ["'self'"],
       baseUri: ["'self'"],
@@ -407,6 +407,15 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/reference-tracks', referenceTrackRoutes);
 app.use('/api/lora', loraRoutes);
 app.use('/api/training', trainingRoutes);
+
+// Serve static frontend build in production mode
+if (config.nodeEnv === 'production') {
+  app.use(express.static(config.staticDir));
+  // SPA fallback: serve index.html for all non-API, non-static routes
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(config.staticDir, 'index.html'));
+  });
+}
 
 // Error handler
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {

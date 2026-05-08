@@ -29,6 +29,9 @@ export const config = {
   // Frontend URL
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
 
+  // Static frontend build directory (for production / Colab)
+  staticDir: process.env.STATIC_DIR || path.join(__dirname, '../../dist'),
+
   // Storage (local only)
   storage: {
     provider: 'local' as const,

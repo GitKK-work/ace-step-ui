@@ -4,29 +4,30 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
+  const proxyTarget = env.VITE_PROXY_TARGET || 'http://127.0.0.1:3001';
   return {
     server: {
       port: 3000,
       host: '0.0.0.0',
       proxy: {
         '/api': {
-          target: 'http://127.0.0.1:3001',
+          target: proxyTarget,
           changeOrigin: true,
         },
         '/audio': {
-          target: 'http://127.0.0.1:3001',
+          target: proxyTarget,
           changeOrigin: true,
         },
         '/editor': {
-          target: 'http://127.0.0.1:3001',
+          target: proxyTarget,
           changeOrigin: true,
         },
         '/blog': {
-          target: 'http://127.0.0.1:3001',
+          target: proxyTarget,
           changeOrigin: true,
         },
         '/demucs-web': {
-          target: 'http://127.0.0.1:3001',
+          target: proxyTarget,
           changeOrigin: true,
         },
       },
