@@ -28,10 +28,20 @@ _llm_handler = None
 def get_handlers():
     global _handler, _llm_handler
     if _handler is None:
+        # Device detection: CUDA > MPS > XLA/TPU (fallback to CPU if TPU unavailable)
         if torch.cuda.is_available():
             device = "cuda"
         elif torch.backends.mps.is_available():
             device = "mps"
+        elif os.environ.get("COLAB_TPU_ADDR"):
+            # TPU detected but ACE-Step uses CUDA ops; warn and fall back to CPU
+            import warnings
+            warnings.warn(
+                "TPU detected but ACE-Step requires CUDA. Falling back to CPU. "
+                "Switch to a GPU runtime for hardware acceleration.",
+                stacklevel=2,
+            )
+            device = "cpu"
         else:
             device = "cpu"
         _handler = AceStepHandler()

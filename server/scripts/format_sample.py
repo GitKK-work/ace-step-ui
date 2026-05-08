@@ -43,6 +43,14 @@ def get_llm_handler(lm_model=None, lm_backend=None):
             device = "cuda"
         elif torch.backends.mps.is_available():
             device = "mps"
+        elif os.environ.get("COLAB_TPU_ADDR"):
+            import warnings
+            warnings.warn(
+                "TPU detected but ACE-Step requires CUDA. Falling back to CPU. "
+                "Switch to a GPU runtime for hardware acceleration.",
+                stacklevel=2,
+            )
+            device = "cpu"
         else:
             device = "cpu"
 
