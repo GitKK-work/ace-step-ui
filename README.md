@@ -24,6 +24,7 @@
   <a href="#-features">Features</a> •
   <a href="#-installation">Installation</a> •
   <a href="#-usage">Usage</a> •
+  <a href="https://colab.research.google.com/github/GitKK-work/ace-step-ui/blob/main/colab-setup.ipynb">Colab</a> •
   <a href="#-contributing">Contributing</a>
 </p>
 
@@ -34,6 +35,9 @@
   <img src="https://img.shields.io/badge/SQLite-Local_First-003B57?style=flat-square&logo=sqlite" alt="SQLite">
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License">
   <img src="https://img.shields.io/github/stars/fspecii/ace-step-ui?style=flat-square" alt="Stars">
+  <a href="https://colab.research.google.com/github/GitKK-work/ace-step-ui/blob/main/colab-setup.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
+  </a>
 </p>
 
 ---
@@ -236,6 +240,16 @@ Open **http://localhost:3000** and start creating!
 ---
 
 ## 📦 Installation
+
+### ☁️ Google Colab（一键部署，免费 GPU）
+
+无需本地 GPU，在 Colab 中免费使用 T4 GPU 运行。
+
+<a href="https://colab.research.google.com/github/GitKK-work/ace-step-ui/blob/main/colab-setup.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" height="30">
+</a>
+
+> 详细步骤参见 [COLAB_DEPLOY.md](COLAB_DEPLOY.md)
 
 ### 1. Install ACE-Step (The AI Engine)
 
