@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 // Load .env from project root (parent of server directory)
@@ -410,11 +411,22 @@ app.use('/api/training', trainingRoutes);
 
 // Serve static frontend build in production mode
 if (config.nodeEnv === 'production') {
-  app.use(express.static(config.staticDir));
-  // SPA fallback: serve index.html for all non-API, non-static routes
-  app.get('*', (_req, res) => {
-    res.sendFile(path.join(config.staticDir, 'index.html'));
-  });
+  const staticDir = config.staticDir;
+  const indexPath = path.join(staticDir, 'index.html');
+
+  if (fs.existsSync(indexPath)) {
+    console.log(`[Static] Serving frontend from: ${staticDir}`);
+    const files = fs.readdirSync(staticDir);
+    console.log(`[Static] Files in dist: ${files.join(', ')}`);
+    app.use(express.static(staticDir));
+    // SPA fallback: serve index.html for all non-API, non-static routes
+    app.get('*', (_req, res) => {
+      res.sendFile(indexPath);
+    });
+  } else {
+    console.warn(`[Static] WARNING: index.html not found at ${indexPath}`);
+    console.warn(`[Static] Frontend will NOT be served. Run 'npm run build' first.`);
+  }
 }
 
 // Error handler
