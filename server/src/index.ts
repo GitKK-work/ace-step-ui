@@ -419,9 +419,17 @@ if (config.nodeEnv === 'production') {
     const files = fs.readdirSync(staticDir);
     console.log(`[Static] Files in dist: ${files.join(', ')}`);
     app.use(express.static(staticDir));
-    // SPA fallback: serve index.html for all non-API, non-static routes
-    app.get('*', (_req, res) => {
-      res.sendFile(indexPath);
+    // SPA fallback: serve index.html for page routes only (no file extension)
+    // Requests for .js, .css, .png etc. that weren't matched get 404
+    app.get('*', (req, res, next) => {
+      const ext = path.extname(req.path);
+      if (ext) {
+        // Has file extension = static asset request that wasn't found
+        res.status(404).json({ error: 'Not found' });
+      } else {
+        // No extension = page route, serve SPA
+        res.sendFile(indexPath);
+      }
     });
   } else {
     console.warn(`[Static] WARNING: index.html not found at ${indexPath}`);

@@ -1,0 +1,14 @@
+/* ACE-Step UI - Base Styles */
+/* Tailwind CSS is loaded via CDN in index.html */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
