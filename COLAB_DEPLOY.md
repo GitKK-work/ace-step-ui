@@ -128,24 +128,14 @@ CUDA: 12.x
 
 **关键步骤，可能需要调整启动命令。**
 
-默认命令：
-```python
-python -m acestep --port 8001 --enable-api --server-name 127.0.0.1
+默认命令（通过 `setup.py` 安装的 CLI 入口）：
+```bash
+acestep --port 8001 --server_name 127.0.0.1
 ```
 
-常见替代命令：
-```python
-# 如果有独立启动脚本
-python app.py --port 8001 --enable-api
+> **注意**：ACE-Step 的 CLI 使用下划线（`--server_name`），不是连字符（`--server-name`）。
 
-# 如果使用 uv 包管理器
-uv run acestep-api --port 8001
-
-# 如果使用 gradio 直接启动
-python app.py --server_name 127.0.0.1 --server_port 8001
-```
-
-等待输出 `ACE-Step API is ready!`，模型加载通常需要 1-3 分钟。
+等待输出 `ACE-Step API is ready!`，模型加载通常需要 1-5 分钟。
 
 如果失败，查看日志：
 ```
@@ -182,9 +172,9 @@ python app.py --server_name 127.0.0.1 --server_port 8001
 
 **Gradio share 方法**：
 
-修改 Cell 9 的启动命令，添加 `--share` 和 `--server-name 0.0.0.0`：
-```python
-python -m acestep --port 8001 --enable-api --server-name 0.0.0.0 --share
+修改 Cell 9 的启动命令，添加 `--share`：
+```bash
+acestep --port 8001 --server_name 0.0.0.0 --share
 ```
 输出中会出现类似 `https://xxxxx.gradio.live` 的链接。注意此链接是 Gradio 原生界面，不含 ace-step-ui 的 React 界面。
 
